@@ -217,7 +217,7 @@
     <div class="card">
         <!-- Левая часть с автозапуском видео -->
         <div class="video-side">
-            <video id="rickVideo" class="rick-video" autoplay loop muted playsinline controls></video>
+            <video id="rickVideo" class="rick-video" autoplay loop playsinline controls></video>
         </div>
 
         <!-- Правая часть (оригинальная визитка без изменений) -->
@@ -264,9 +264,9 @@
         </div>
     </div>
 
-    <script>
+<script>
         (function() {
-            // Укажите здесь путь к вашему 21 МБ видеофайлу или ссылку с WebArchive
+            // Путь к вашему 21 МБ видеофайлу (или прямая ссылка с WebArchive) и аватарке
             const VIDEO_URL = 'rickroll.mp4';
             const AVATAR_URL = 'image.jpg';
 
@@ -276,23 +276,33 @@
             avatar.src = AVATAR_URL;
             video.src = VIDEO_URL;
 
+            // 1. Пробуем запустить сразу со звуком при открытии страницы
             window.addEventListener('DOMContentLoaded', () => {
                 video.muted = false;
-                const p = video.play();
-                if (p && typeof p.catch === 'function') {
-                    p.catch(() => {
+                video.volume = 1.0;
+
+                const playPromise = video.play();
+                if (playPromise && typeof playPromise.catch === 'function') {
+                    playPromise.catch(() => {
+                        // Если браузер заблокировал автозапуск со звуком — запускаем без звука, чтобы видео не стояло на паузе
                         video.muted = true;
                         video.play().catch(() => {});
                     });
                 }
             });
 
-            document.addEventListener('click', () => {
+            // 2. Включаем звук при первом же клике, тапе или нажатии клавиши
+            const unlockSound = () => {
                 if (video.muted) {
                     video.muted = false;
+                    video.volume = 1.0;
                     video.play().catch(() => {});
                 }
-            }, { once: true });
+            };
+
+            ['click', 'touchstart', 'keydown'].forEach(evt => {
+                document.addEventListener(evt, unlockSound, { once: true });
+            });
         })();
     </script>
 </body>
