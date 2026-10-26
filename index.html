@@ -26,21 +26,49 @@
             padding: 20px;
         }
 
-        /* Карточка визитки */
+        /* Карточка визитки (растянутая: слева видео, справа визитка) */
         .card {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 30px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            max-width: 400px;
+            max-width: 900px;
             width: 100%;
-            padding: 40px 30px;
-            text-align: center;
+            display: grid;
+            grid-template-columns: 1.25fr 1fr;
+            overflow: hidden;
             transition: transform 0.3s ease;
         }
 
         .card:hover {
             transform: translateY(-10px);
+        }
+
+        /* Левая часть с видео */
+        .video-side {
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 420px;
+            overflow: hidden;
+        }
+
+        .rick-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Правая часть с оригинальной визиткой */
+        .profile-side {
+            padding: 40px 30px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         /* Аватар / фото */
@@ -169,8 +197,17 @@
         }
 
         /* Для мобильных */
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
             .card {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+
+            .video-side {
+                min-height: 240px;
+            }
+
+            .profile-side {
                 padding: 30px 20px;
             }
         }
@@ -178,45 +215,85 @@
 </head>
 <body>
     <div class="card">
-        <!-- Здесь можно использовать либо фото, либо заглушку с инициалами -->
-        <img src="image.jpg" alt="Аватар" class="avatar">
-        
-        <!-- Заглушка с инициалами (например, "JD") 
-        <div class="avatar-placeholder">JD</div> -->
+        <!-- Левая часть с автозапуском видео -->
+        <div class="video-side">
+            <video id="rickVideo" class="rick-video" autoplay loop muted playsinline controls></video>
+        </div>
 
-        <h1>Валерий SubaKon</h1>
-        <div class="title">Стример-энтузиаст</div>
-        <p class="description">
-            Страдаю разной фигней в виде хобби. 
-            Показываю разную фигню на стримах.
-        </p>
+        <!-- Правая часть (оригинальная визитка без изменений) -->
+        <div class="profile-side">
+            <!-- Здесь можно использовать либо фото, либо заглушку с инициалами -->
+            <img id="avatarImg" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Аватар" class="avatar">
+            
+            <!-- Заглушка с инициалами (например, "JD") 
+            <div class="avatar-placeholder">JD</div> -->
 
-        <!-- Контакты -->
-        <div class="contact-info">
-            <a href="mailto:admin@subakon.ru" class="contact-item">
-                <i class="fas fa-envelope"></i>
-                <span>admin@subakon.ru</span>
-            </a>
-            <a href="https://t.me/+K9RVZPAm8oVlYTVi" class="contact-item" target="_blank">
-                <i class="fab fa-telegram"></i>
-                <span>@Обитель Шубы</span>
-            </a>
-            <div class="contact-item">
-                <i class="fas fa-map-marker-alt"></i>
-                <span>Где-то на просторах интернета</span>
+            <h1>Валерий SubaKon</h1>
+            <div class="title">Стример-энтузиаст</div>
+            <p class="description">
+                Страдаю разной фигней в виде хобби. 
+                Показываю разную фигню на стримах.
+            </p>
+
+            <!-- Контакты -->
+            <div class="contact-info">
+                <a href="mailto:admin@subakon.ru" class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>admin@subakon.ru</span>
+                </a>
+                <a href="https://t.me/+K9RVZPAm8oVlYTVi" class="contact-item" target="_blank">
+                    <i class="fab fa-telegram"></i>
+                    <span>@Обитель Шубы</span>
+                </a>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Где-то на просторах интернета</span>
+                </div>
             </div>
-        </div>
 
-        <!-- Соцсети -->
-        <div class="social-links">
-            <a href="https://github.com/SubaKon" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="#" target="_blank"><i class="fab fa-discord"></i></a>
-            <a href="https://www.twitch.tv/subakon" target="_blank"><i class="fab fa-twitch"></i></a>
-			<a href="https://youtube.com/@SubaKon" target="_blank"><i class="fab fa-youtube"></i></a>
-        </div>
+            <!-- Соцсети -->
+            <div class="social-links">
+                <a href="https://github.com/SubaKon" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://discord.com" target="_blank"><i class="fab fa-discord"></i></a>
+                <a href="https://www.twitch.tv/subakon" target="_blank"><i class="fab fa-twitch"></i></a>
+                <a href="https://youtube.com/@SubaKon" target="_blank"><i class="fab fa-youtube"></i></a>
+            </div>
 
-        <!-- Кнопка (например, ссылка на портфолио) -->
-        <!-- <a href="#" class="btn">Мой сайт</a> -->
+            <!-- Кнопка (например, ссылка на портфолио) -->
+            <!-- <a href="#" class="btn">Мой сайт</a> -->
+        </div>
     </div>
+
+    <script>
+        (function() {
+            // Укажите здесь путь к вашему 21 МБ видеофайлу или ссылку с WebArchive
+            const VIDEO_URL = 'rickroll.mp4';
+            const AVATAR_URL = 'image.jpg';
+
+            const video = document.getElementById('rickVideo');
+            const avatar = document.getElementById('avatarImg');
+
+            avatar.src = AVATAR_URL;
+            video.src = VIDEO_URL;
+
+            window.addEventListener('DOMContentLoaded', () => {
+                video.muted = false;
+                const p = video.play();
+                if (p && typeof p.catch === 'function') {
+                    p.catch(() => {
+                        video.muted = true;
+                        video.play().catch(() => {});
+                    });
+                }
+            });
+
+            document.addEventListener('click', () => {
+                if (video.muted) {
+                    video.muted = false;
+                    video.play().catch(() => {});
+                }
+            }, { once: true });
+        })();
+    </script>
 </body>
 </html>
